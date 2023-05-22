@@ -5,14 +5,13 @@
 // store subscribe
 // action dispatch
 
-const { createStore, combineReducers } = require("redux");
+const { createStore, combineReducers , applyMiddleware } = require("redux");
+const { default: logger } = require("redux-logger");
 
 // product 
 
 const GET_PRODUCT = "GET_PRODUCT";
 const ADD_PRODUCT = "ADD_PRODUCT";
-const GET_CART = "GET_CART";
-const ADD_CART = "ADD_CART";
 
 const initialProductState = {
     products:["salt","sugar"],
@@ -47,56 +46,16 @@ const handleReducerLogic = (state = initialProductState , action)=>{
     }
 }
 
-const initialCartState = {
-    cart:["salt","sugar"],
-    cartCount : 2
-}
-const handleGetCart = () =>{
-    return{
-        type:GET_CART
-    }
-}
-
-const handleAddCart = (cart) =>{
-    return{
-        type:ADD_CART,
-        payload:cart
-    }
-}
-
-const handleCartReducerLogic = (state=initialCartState , action) =>{
-    switch (action.type) {
-        
-        case ADD_CART :
-            return{
-                cartProduct:[...state.cart , action.payload],
-                cartCount:state.cartCount + 1 
-            }
-        case GET_CART:
-            return {
-                ...state
-            }
-        default:
-            return state;
-    }
-}
-
 // combine reducers 
 
 
-const rootReducer = combineReducers(
-    {
-        productR : handleReducerLogic,
-        cartR: handleCartReducerLogic
-    }
-)
 
-const store = createStore(rootReducer)
+
+const store = createStore(handleReducerLogic,applyMiddleware(logger))
 store.subscribe(()=>{
     console.log(store.getState());
 })
 
-store.dispatch(handleGetCart())
-store.dispatch(handleAddCart("mouse"))
-store.dispatch(handleGetProduct())
+
 store.dispatch(handleAddProduct("sugarMoult"))
+store.dispatch(handleAddProduct("sugarMoultX"))

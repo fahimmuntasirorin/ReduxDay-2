@@ -1,11 +1,13 @@
 {
   "dependencies": {
-    "redux": "^4.2.1"
+    "axios": "^1.4.0",
+    "redux": "^4.2.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.2"
   },
   "name": "redux-multiplereducer",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
